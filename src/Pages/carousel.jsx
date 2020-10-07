@@ -136,7 +136,7 @@ const DemoCarousel = (props) => {
 
 
 
-                <a href="/carousel2">
+                <a href="/">
 
                     <Button
                         variant="contained"
@@ -154,7 +154,7 @@ const DemoCarousel = (props) => {
 
 
             </div>) : (<div>
-                <a href={"/admin"}>
+                <a href={"carousel2/#/admin"}>
 
                     <Button
                         // onClick={adminHandler}
