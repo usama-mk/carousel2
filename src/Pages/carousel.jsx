@@ -136,7 +136,7 @@ const DemoCarousel = (props) => {
 
 
 
-                <a href="/">
+                <a href="/carousel2">
 
                     <Button
                         variant="contained"
