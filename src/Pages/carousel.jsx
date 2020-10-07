@@ -154,7 +154,7 @@ const DemoCarousel = (props) => {
 
 
             </div>) : (<div>
-                <a href={"carousel2/#/admin"}>
+                <a href={"/#/admin"}>
 
                     <Button
                         // onClick={adminHandler}
