@@ -11,9 +11,9 @@ function App() {
     <div className="App">
        
       <Switch>
-      <Route exact path='/carousel2' render={()=>(<DemoCarousel adminCheckP={false} />)}  />
-     <Route exact path='/admin' component={Login}  />
-     <Route exact path='/admin/carousel2' component={DemoCarousel}/>
+      <Route exact path='/carousel2/' render={()=>(<DemoCarousel adminCheckP={false} />)}  />
+     <Route exact path='/carousel2/admin' component={Login}  />
+     <Route exact path='/carousel2/admin/carousel2' component={DemoCarousel}/>
      
      </Switch>
     
