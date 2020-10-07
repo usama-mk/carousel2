@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/carousel2/static/css/main.0e421966.chunk.css",
-    "main.js": "/carousel2/static/js/main.e0cc66bc.chunk.js",
-    "main.js.map": "/carousel2/static/js/main.e0cc66bc.chunk.js.map",
+    "main.js": "/carousel2/static/js/main.47f1b907.chunk.js",
+    "main.js.map": "/carousel2/static/js/main.47f1b907.chunk.js.map",
     "runtime-main.js": "/carousel2/static/js/runtime-main.c1522d29.js",
     "runtime-main.js.map": "/carousel2/static/js/runtime-main.c1522d29.js.map",
     "static/css/2.fb346933.chunk.css": "/carousel2/static/css/2.fb346933.chunk.css",
     "static/js/2.fae37b36.chunk.js": "/carousel2/static/js/2.fae37b36.chunk.js",
     "static/js/2.fae37b36.chunk.js.map": "/carousel2/static/js/2.fae37b36.chunk.js.map",
     "index.html": "/carousel2/index.html",
-    "precache-manifest.7b96e3853eb780360b8c5e6875ff0307.js": "/carousel2/precache-manifest.7b96e3853eb780360b8c5e6875ff0307.js",
+    "precache-manifest.1cf547cfa532ecaea8a3295bcbf5bcf1.js": "/carousel2/precache-manifest.1cf547cfa532ecaea8a3295bcbf5bcf1.js",
     "service-worker.js": "/carousel2/service-worker.js",
     "static/css/2.fb346933.chunk.css.map": "/carousel2/static/css/2.fb346933.chunk.css.map",
     "static/css/main.0e421966.chunk.css.map": "/carousel2/static/css/main.0e421966.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.fb346933.chunk.css",
     "static/js/2.fae37b36.chunk.js",
     "static/css/main.0e421966.chunk.css",
-    "static/js/main.e0cc66bc.chunk.js"
+    "static/js/main.47f1b907.chunk.js"
   ]
 }
