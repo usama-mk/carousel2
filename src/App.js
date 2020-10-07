@@ -9,9 +9,9 @@ function App() {
   return (
 
     <div className="App">
-       
+       <DemoCarousel/>
       <Switch>
-      <Route exact path='/carousel2/' render={()=>(<DemoCarousel adminCheckP={false} />)}  />
+      {/* <Route exact path='/carousel2/' render={()=>(<DemoCarousel adminCheckP={false} />)}  /> */}
      <Route exact path='/carousel2/admin' component={Login}  />
      <Route exact path='/carousel2/admin/carousel2' component={DemoCarousel}/>
      
