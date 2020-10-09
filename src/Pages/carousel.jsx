@@ -1,179 +1,125 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import './carousel.css';
 import { Button, IconButton } from '@material-ui/core';
-import { Delete, CloudUpload, VerifiedUser, Home } from "@material-ui/icons";
-import { useState } from "react";
 import { storage } from "../firebase";
 import { db } from "../firebase";
-import { useEffect } from "react";
 var React = require('react');
 var Carousel = require('react-responsive-carousel').Carousel;
 
 
-const DemoCarousel = (props) => {
+class DemoCarousel extends React.Component {
+   
+   
 
-
-    const form = "https://goasolutions.paperform.co/";
-    const [image, setImage] = useState(null);
-    const [urlArray, setUrlArray] = useState([]);
-    const [progress, setProgress] = useState(0);
-    const [adminCheck, setAdminCheck] = useState(props.adminCheckP);
-    console.log("admin pppp check: ")
-    console.log(props.adminCheckP);
-
-
-
-    useEffect(() => {
-        db.collection("imagesData").onSnapshot((snapshot) =>
-            setUrlArray(
-                snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    data: doc.data(),
-                }))
-            )
-        );
-    }, [])
-
-    const selectFileHandler = (event) => {
-        if (event.target.files[0]) {
-            setImage(event.target.files[0]);
+    constructor(){
+        super();
+        this.state={
+            imageUrls:null,
+            transTime: null,
         }
-
-    }
-
-    const deleteImage = (id, name) => {
-        db.collection("imagesData").doc(id).delete();
-        //delete from storage
-
-
-        // var desertRef = storage.ref(`images/${image.name}`);
-        // desertRef.delete().then(function() {
-        //     // File deleted successfully
-        //   }).catch(function(error) {
-        //     // Uh-oh, an error occurred!
-        //     console.log(error);
-        //   });
-    }
-
-    const uploadFileHandler = () => {
-        if (image) {
-            const uploadTask = storage.ref(`images/${image.name}`).put(image);
-            uploadTask.on(
-                "state_changed",
-                snapshot => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    setProgress(progress);
-                },
-                error => {
-                    console.log(error);
-                },
-                () => {
-                    storage.ref("images").child(image.name).getDownloadURL().then(url => {
-                        urlArray.push(url);
-                        console.log(urlArray);
-                        db.collection("imagesData").add({
-                            imageUrl: url,
-                            imageName: image.name
-                        });
-
-                    })
-                }
-            )
-        }
+        
     }
 
 
 
+
+componentDidMount(){
+    const that=this;
+    const IU=[];
+
+    storage.ref("images").listAll().then(function(result){
+        result.items.forEach(function(imageRef){
+            // console.log("Image reference"+ imageRef);
+            imageRef.getDownloadURL().then(function(url){
+                // console.log(url)
+                IU.push(url);
+                // that.setState({imageUrls: IU}
+               
+           that.setState({...that.state,imageUrls: IU}, ()=> console.log(that.state.imageUrls));
+                
+                console.log(that.state)
+  
+            })
+            
+            
+        })
+        console.log("IIIUUU")
+        console.log(IU);
+        // that.setState({...that.state, transTime: })
+      
+        db.collection('transition').onSnapshot((snapshot)=>
+        {
+       that.setState({...that.state, transTime: snapshot.docs.map(doc =>                             
+        ({
+            id: doc.id,        //the unique 'auto' ids
+            data: doc.data(),  //the data inside the doc(coll>doc>data)
+        })
+        )} )
+        } );
+      
+        setTimeout(function () {
+            window.location.reload()
+        }, 120000);
+        console.log("WITH ZZZZZZZZZZZZZZZZZZZZZZ TIMESTATE")
+        console.log(that.state.transTime)
+         
+
+         
+    });
+
+    
+}
+
+
+ 
+
+// handleTransTime=(event)=>{
+//     // console.log(event.target.value)
+//     this.setState({...this.setState.imageUrls, transTime: event.target.value})
+// }
+
+
+ 
+
+render(){
+   
     return (
-        true ? <div className="carousel">
+        (this.state.imageUrls)&&(this.state.transTime)?
+        <div className="carousel">
 
-            <Carousel autoPlay interval="2000" infiniteLoop swipeable emulateTouch dynamicHeight showThumbs={false} >
+            <Carousel autoPlay interval={ this.state.transTime[0].data.transitionTime} infiniteLoop swipeable emulateTouch dynamicHeight showThumbs={false} >
 
-                {urlArray.map((url) =>
+                {this.state.imageUrls.map((url) =>
                     (<div>
 
                         <IconButton href={form} style={{ width: "99vw" }}>
-                            <img alt="Not Loaded" src={url.data.imageUrl} height="400" width="480" />
+                            <img alt="Not Loaded" src={url} height="400" width="480" />
 
                         </IconButton>
-                        <br />
-                        {props.adminCheckP ? (<Button
-                            onClick={() => { deleteImage(url.id, url.data.imageName) }}
-                            variant="contained"
-                            color="default"
-                            // className="deleteButton"
-                            startIcon={<Delete />}
-                            style={{ margin: "0", position: "relative", bottom: "40px" }}
-                        >
-                            Delete
-                        </Button>) : <div> </div>}
+                        </div>
+                    )
+                )
+                    }
+                    </Carousel>
+                    <br/><b></b>
+                    <div>
+                    {/* <label style={{fontWeight:"bold", margin: "20px"}} >Enter the speed of Transitions in Milliseconds</label>
+                        <input type="number" min="0" value={this.state.transTime} onChange={this.handleTransTime}/> */}
+                    </div>
+                    </div>:
+                     <div>
+                     <h1 style={{display: "flex", alignItems: "center", justifyContent:"center"}}>Fetching Data ...</h1>
+                     </div>
 
-                    </div>)
-                )}
-
-                {/* <div>
-                <img alt="" src={urlArray[1]} height="400" width="480" />    
-                    <p className="legend">Legend 14</p>
-                </div> */}
-            </Carousel>
-            {props.adminCheckP ? (<div className="carousel_actions">
-
-                <progress value={progress} max="100" />
-                <br />
-                <input type="file" onChange={selectFileHandler} id="upload-button" />
-
-                <Button
-                    onClick={uploadFileHandler}
-                    variant="contained"
-                    color="primary"
-                    // className="uploadButton"
-                    startIcon={<CloudUpload />}
-                >
-                    Upload
-</Button>
-
-
-
-                <a href="/carousel2">
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        // className="uploadButton"
-                        startIcon={<Home />}
-                    >
-                        Home
-</Button>
-                </a>
-
-
-
-
-
-
-            </div>) : (<div>
-                <a href={"#/admin"}>
-
-                    <Button
-                        // onClick={adminHandler}
-                        variant="contained"
-                        color="primary"
-                        // className="uploadButton"
-                        startIcon={<VerifiedUser />}
-                    >
-                        Admin Login
-</Button>
-                </a>
-
-            </div>)}
-
-        </div> : <div><h1>hi</h1></div>
 
     );
 
 }
+ 
+
+}
+
+const form = "https://goasolutions.paperform.co/";
 export default DemoCarousel;
 
 
